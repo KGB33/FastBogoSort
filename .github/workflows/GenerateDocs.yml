@@ -26,7 +26,7 @@ jobs:
         ~/go/bin/gomarkdoc . > ./docs.md
         git diff docs.md >> $DOCS_CHANGED
     - name: Commit Changes
-      if: $DOCS_CHANGED != ''
+      if: ${{ $DOCS_CHANGED != '' }}
       run: |
         git config --global user.name 'AutoDocAction'
         git config --global user.email 'AudoDocAction@no-reply.com'
