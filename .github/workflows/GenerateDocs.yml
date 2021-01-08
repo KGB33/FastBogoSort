@@ -25,8 +25,7 @@ jobs:
       run: |
         GO111MODULE=on go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
         ~/go/bin/gomarkdoc . > ./docs.md
-        which wc
-        git diff docs.md | wc -c | exit
+        exit $(git diff docs.md | wc -c)
     - name: Commit Changes
       if: ${{ !success() }}
       run: |
