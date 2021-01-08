@@ -4,13 +4,28 @@ import (
 	"fmt"
 	"sort"
 	"testing"
+	"time"
 )
 
-func TestBogoSortDispatcher(t *testing.T) {
+func TestSortDispatcher(t *testing.T) {
 	list := []int{2, 3, 1, 5, 4}
 	expected := []int{1, 2, 3, 4, 5}
 
-	result := BogoSortDispatcher(list)
+	result := SortDispatcher(list)
+
+	for i := range result {
+		if result[i] != expected[i] {
+			t.Errorf("List not sorted properly, got %v, expected %v", result, expected)
+		}
+	}
+
+}
+
+func TestCustomSortDispatcher(t *testing.T) {
+	list := []int{2, 3, 1, 5, 4}
+	expected := []int{1, 2, 3, 4, 5}
+
+	result := CustomSortDispatcher(list, 1e9, 80, 50 * time.Millisecond)
 
 	for i := range result {
 		if result[i] != expected[i] {
@@ -25,7 +40,7 @@ func TestBogoSort(t *testing.T) {
 	expected := []int{1}
 
 	result := make(chan []int, 1)
-	BogoSort(list, result)
+	Sort(list, result)
 	for len(result) != 1 {
 	} // wait for BogoSort to finish
 	for i, v := range <-result {
@@ -47,7 +62,7 @@ func TestLongBogoSort(t *testing.T) {
 	expected := append([]int{}, list...)
 	sort.Ints(expected)
 
-	result := BogoSortDispatcher(list)
+	result := SortDispatcher(list)
 	fmt.Println(result)
 	for i := range result {
 		if result[i] != expected[i] {

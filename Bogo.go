@@ -7,38 +7,63 @@ import (
 	"time"
 )
 
-func BogoSortDispatcher(splice []int) []int {
-	/*
-		This function takes a splice of ints and returns a sorted splice.
-
-		This function calls the garbage collector to clear up compleated goroutines
-		once ~1gb of memory is allocated.
-	*/
+// Sorts a splice of integers suchthat the the computational load will not exceed
+// the given maxes.
+//
+// 		- maxMem: Maximum Bytes of memory Allocated
+// 		- maxCPU: Maximum Percent CPU Useage (0 to 100)
+// 		- delay: When one of the above values is exceed, how much time should
+// 				we wait before calling garbage collection?
+//
+// 	This function calls the garbage collector to clear up compleated goroutines
+// 	once maxCPU or maxMem is exceed.
+func CustomSortDispatcher(a []int, maxMem int, maxCPU int, delay time.Duration) []int {
+	// Best case
+	if sort.IntsAreSorted(a) {
+		return a
+	}
+	// Realistic Case
 	result := make(chan []int, 1)
 	for len(result) != 1 {
-		if currMemoryAlloc() > 1e9 {
+		if currMemoryAlloc() > maxMem || currCPUUse() > maxCPU {
+			time.Sleep(delay)
 			runtime.GC()
 			runtime.Gosched()
 		} else {
-			go BogoSort(append([]int{}, splice...), result)
+			go Sort(append([]int{}, a...), result)
 		}
 	}
 	return <-result
 }
 
-func BogoSort(splice []int, out chan []int) {
+// 	Calls CustomSortDispatcher with the following defaults:
+// 		- maxMem: ~1GB
+// 		- maxCPU: 80%
+// 		- delay: 50ms
+func SortDispatcher(a []int) []int {
+	return CustomSortDispatcher(a, 1e9, 80, 50*time.Millisecond)
+}
+
+// Shuffles the input. If the shuffled input is
+// sorted, it pushes it to the channel.
+func Sort(a []int, out chan []int) {
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(splice), func(i, j int) { splice[i], splice[j] = splice[j], splice[i] })
-	if sort.IntsAreSorted(splice) {
+	rand.Shuffle(len(a), func(i, j int) { a[i], a[j] = a[j], a[i] })
+	if sort.IntsAreSorted(a) {
 		select {
-		case out <- splice:
+		case out <- a:
 		default:
 		}
 	}
 }
 
-func currMemoryAlloc() uint64 {
+func currCPUUse() int {
+	// TODO
+	return 0
+}
+
+func currMemoryAlloc() int {
 	var m runtime.MemStats
 	runtime.ReadMemStats(&m)
-	return m.Alloc
+	return int(m.Alloc)
 }
