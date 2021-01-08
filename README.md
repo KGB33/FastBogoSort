@@ -1,5 +1,9 @@
 # FastBogoSort
 
+```go
+import github.com/KGB33/FastBogoSort
+```
+
 [Wikipedia](https://en.wikipedia.org/wiki/Bogosort)
 
 This implementation of BogoSort uses goroutines to maximize speed,
