@@ -20,14 +20,14 @@ jobs:
       with:
         go-version: 1.15
         
-    - name: Generate Docs
+    - name: GenDocs
       continue-on-error: true
       run: |
         GO111MODULE=on go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
         ~/go/bin/gomarkdoc . > ./docs.md
         exit $(git diff docs.md | wc -c)
     - name: Commit Changes
-      if: ${{ success() != true }}
+      if: ${{ setup.GenDocs.outcome == 'failure' }}
       run: |
         git config --global user.name 'AutoDocAction'
         git config --global user.email 'AudoDocAction@no-reply.com'
