@@ -24,8 +24,6 @@ jobs:
       run: |
         go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
         gomarkdoc . > docs.md
-    - name: Commit Docs
-      run: |
         git config --global user.name 'AutoDocAction'
         git config --global user.email 'AudoDocAction@no-reply.com'
         git add docs.md
