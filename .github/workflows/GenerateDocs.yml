@@ -21,6 +21,7 @@ jobs:
         go-version: 1.15
         
     - name: GenDocs
+      id: GenDocs
       continue-on-error: true
       run: |
         GO111MODULE=on go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
