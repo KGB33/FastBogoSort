@@ -25,7 +25,7 @@ jobs:
         GO111MODULE=on go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
         ~/go/bin/gomarkdoc . > ./docs.md
         cat docs.md
-        git add docs.md
+        git add ${GITHUB_WORKSPACE}/docs.md
         git config --global user.name 'AutoDocAction'
         git config --global user.email 'AudoDocAction@no-reply.com'
         git status
