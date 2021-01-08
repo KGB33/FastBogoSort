@@ -29,6 +29,7 @@ jobs:
         exit $(git diff docs.md | wc -c)
     - name: Debug outcome
       run: |
+        echo $(git diff docs.md | wc -c)
         echo ${{ steps.GenDocs.outcome }}
     - name: Commit Changes
       if: steps.GenDocs.outcome == 'failure'
