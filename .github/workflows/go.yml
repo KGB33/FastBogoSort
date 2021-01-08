@@ -29,6 +29,12 @@ jobs:
       run: go test -v ./... -short
     
     - name: Generate Docs
-      run: go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc && gomarkdoc . > docs.md
-    
+      run: |
+        go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
+        gomarkdoc . > docs.md
+        git config --global user.name 'AutoDocAction'
+        git config --global user.email 'AudoDocAction@no-reply.com'
+        git add docs.md
+        git commit -m "auto generated docs"
+        git push
 
