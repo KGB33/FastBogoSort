@@ -19,7 +19,7 @@ import "FastBogo/v2"
 func CustomSortDispatcher(a []int, maxMem int, maxCPU int, delay time.Duration) []int
 ```
 
-Sorts a splice of integers such that the the computational load will not exceed the given maxes\. \- maxMem: Maximum Bytes of memory Allocated \- maxCPU: Maximum Percent CPU Useage \(0 to 100\) \- delay: When one of the above values is exceed\, how much time should we wait before calling garbage collection?
+Sorts a splice of integers such that the the computational load will not exceed the given maxes\. maxMem: Maximum Bytes of memory Allocated; maxCPU: Maximum Percent CPU Useage \(0 to 100\); delay: When one of the above values is exceed\, how much time should we wait before calling garbage collection?
 
 ```
 This function calls the garbage collector to clear up compleated goroutines
@@ -40,7 +40,7 @@ Shuffles the input\. If the shuffled input is sorted\, it pushes it to the chann
 func SortDispatcher(a []int) []int
 ```
 
-Calls CustomSortDispatcher with the following defaults: \- maxMem: \~1GB \- maxCPU: 80% \- delay: 50ms
+Calls CustomSortDispatcher with the following defaults: maxMem: \~1GB\, maxCPU: 80%\, delay: 50ms\,
 
 
 
