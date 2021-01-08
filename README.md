@@ -9,7 +9,7 @@ import github.com/KGB33/FastBogoSort
 This implementation of BogoSort uses goroutines to maximize speed,
 memory usage, and CPU usage. It is recommended to run this in an
 auto-scaling cloud instance to maximize cost as well. Alternatively, if you
-want to be the hero developer. Import this package aliased as something like
+want to be the hero developer, import this package aliased as something like
 `QuickSort`, wait a few weeks, then swap it out for a faster sorting algorithm.
 
 # Usage
