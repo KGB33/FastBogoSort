@@ -21,12 +21,13 @@ jobs:
         go-version: 1.15
         
     - name: Generate Docs
+      continue-on-error: true
       run: |
         GO111MODULE=on go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
         ~/go/bin/gomarkdoc . > ./docs.md
-        git diff docs.md >> $DOCS_CHANGED
+        git diff docs.md | wc -c | exit
     - name: Commit Changes
-      if: ${{ $DOCS_CHANGED != '' }}
+      if: ${{ !success() }}
       run: |
         git config --global user.name 'AutoDocAction'
         git config --global user.email 'AudoDocAction@no-reply.com'
