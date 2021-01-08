@@ -24,9 +24,10 @@ jobs:
       run: |
         GO111MODULE=on go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
         ~/go/bin/gomarkdoc . > docs.md
-        ls
         git config --global user.name 'AutoDocAction'
         git config --global user.email 'AudoDocAction@no-reply.com'
+        git status
         git add docs.md
+        git status
         git commit -m "auto generated docs"
         git push
