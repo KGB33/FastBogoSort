@@ -27,6 +27,9 @@ jobs:
         GO111MODULE=on go get -u github.com/princjef/gomarkdoc/cmd/gomarkdoc
         ~/go/bin/gomarkdoc . > ./docs.md
         exit $(git diff docs.md | wc -c)
+    - name: Debug outcome
+      run: |
+        echo ${{ steps.GenDocs.outcome }}
     - name: Commit Changes
       if: steps.GenDocs.outcome == 'failure'
       run: |
