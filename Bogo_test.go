@@ -25,7 +25,7 @@ func TestCustomSortDispatcher(t *testing.T) {
 	list := []int{2, 3, 1, 5, 4}
 	expected := []int{1, 2, 3, 4, 5}
 
-	result := CustomSortDispatcher(list, 1e9, 80, 50 * time.Millisecond)
+	result := CustomSortDispatcher(list, 1e9, 80, 50*time.Millisecond)
 
 	for i := range result {
 		if result[i] != expected[i] {
@@ -67,6 +67,17 @@ func TestLongBogoSort(t *testing.T) {
 	for i := range result {
 		if result[i] != expected[i] {
 			t.Errorf("Result not sorted correctly, got %d at index %d, expected %d", result[i], i, expected[i])
+		}
+	}
+}
+
+func TestBestCase(t *testing.T) {
+	list := []int{-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15}
+	result := SortDispatcher(list)
+	for i := range list {
+		if list[i] != result[i] {
+			t.Errorf("Result not sorted correctly, got %d at index %d, expected %d",
+				result[i], i, list[i])
 		}
 	}
 }
